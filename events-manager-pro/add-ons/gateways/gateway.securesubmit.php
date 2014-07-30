@@ -215,8 +215,8 @@ class EM_Gateway_SecureSubmit extends EM_Gateway {
 		$config = new HpsConfiguration();
 
         $config->secretApiKey = get_option('em_'.$this->gateway.'_secret_key');
-        $config->versionNumber = '0000';
-        $config->developerId = '000000';
+        $config->versionNumber = '1740';
+        $config->developerId = '002914';
 
         $chargeService = new HpsChargeService($config);
 
