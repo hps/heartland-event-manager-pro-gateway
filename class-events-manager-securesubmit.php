@@ -53,13 +53,13 @@ class EM_Gateway_SecureSubmit extends EM_Gateway {
 
     /**
      * If your gateway supports the ability to pay without requiring further fields (e.g. credit card info), then you can set this to true.
-     * 
-     * You will automatically have the ability to show buttons within your gateway. It's up to you to change what happens after by 
+     *
+     * You will automatically have the ability to show buttons within your gateway. It's up to you to change what happens after by
      * overriding functions from EM_Gateway such as modifying booking_add or booking_form_feedback.
      *
      * @since    1.0.0
      *
-     *  
+     *
      * @var boolean
      */
     var $button_enabled = false;
@@ -69,10 +69,10 @@ class EM_Gateway_SecureSubmit extends EM_Gateway {
      *
      * @since    1.0.0
      *
-     *  
+     *
      * @var boolean
      */
-    var $supports_multiple_bookings = true;    
+    var $supports_multiple_bookings = true;
 
     /**
      * Some external gateways (e.g. PayPal IPNs) return information back to your site about payments, which allow you to automatically track refunds made outside Events Manager.
@@ -143,7 +143,7 @@ class EM_Gateway_SecureSubmit extends EM_Gateway {
 
    /**
      * This function intercepts the previous booking form url from the javascript localized array of EM variables and
-     * forces it to be an HTTPS url. 
+     * forces it to be an HTTPS url.
      *
      * @since    1.0.0
      *
@@ -152,7 +152,7 @@ class EM_Gateway_SecureSubmit extends EM_Gateway {
      */
     public function em_wp_localize_script($localized_array) {
         $localized_array['bookingajaxurl'] = $this->force_ssl($localized_array['bookingajaxurl']);
-        
+
         if ( ! is_admin() )   {
             $localized_array['ajaxurl'] = $this->force_ssl($localized_array['ajaxurl']);
         }
@@ -186,15 +186,15 @@ class EM_Gateway_SecureSubmit extends EM_Gateway {
 
         if( $post_validation && empty($EM_Booking->booking_id) ){
             if( get_option('dbem_multiple_bookings') && get_class($EM_Booking) == 'EM_Multiple_Booking' ){
-                add_filter('em_multiple_booking_save', array(&$this, 'em_booking_save'),2,2);               
+                add_filter('em_multiple_booking_save', array(&$this, 'em_booking_save'),2,2);
             }else{
                 add_filter('em_booking_save', array(&$this, 'em_booking_save'),2,2);
-            }               
+            }
         }
     }
 
     /**
-     * Added to filters once a booking is added. Once booking is saved, we capture payment, and approve the booking (saving a second time). If payment isn't approved, just delete the booking and return false for save. 
+     * Added to filters once a booking is added. Once booking is saved, we capture payment, and approve the booking (saving a second time). If payment isn't approved, just delete the booking and return false for save.
      * @param bool $result
      * @param EM_Booking $EM_Booking
      */
@@ -265,7 +265,7 @@ class EM_Gateway_SecureSubmit extends EM_Gateway {
         return $return;
     }
 
-    /* 
+    /*
      * --------------------------------------------------
      * Booking UI - modifications to booking pages and tables containing securesubmit bookings
      * --------------------------------------------------
@@ -285,15 +285,15 @@ class EM_Gateway_SecureSubmit extends EM_Gateway {
         <p class="em-bookings-form-gateway-expiry">
           <label><?php  _e('Expiry Date','em-pro'); ?></label>
           <select id="exp_month" >
-            <?php 
+            <?php
                 for($i = 1; $i <= 12; $i++){
                     $m = $i > 9 ? $i:"0$i";
                     echo "<option>$m</option>";
-                } 
+                }
             ?>
-          </select> / 
+          </select> /
           <select id="exp_year" >
-            <?php 
+            <?php
                 $year = date('Y',current_time('timestamp'));
                 for($i = $year; $i <= $year+10; $i++){
                     echo "<option>$i</option>";
@@ -350,9 +350,9 @@ class EM_Gateway_SecureSubmit extends EM_Gateway {
      * Gateway Settings Functions
      * --------------------------------------------------
      */
-    
+
     /**
-     * Outputs custom SecureSubmit setting fields in the settings page 
+     * Outputs custom SecureSubmit setting fields in the settings page
      */
     function mysettings() {
         global $EM_options;
@@ -418,8 +418,8 @@ class EM_Gateway_SecureSubmit extends EM_Gateway {
         </table>
         <?php
     }
-    
-    /* 
+
+    /*
      * Run when saving settings, saves the settings available in EM_Gateway_SecureSubmit::mysettings()
      */
     function update() {
@@ -443,20 +443,20 @@ class EM_Gateway_SecureSubmit extends EM_Gateway {
     }
     /**
      * Add extra placeholders to the booking email. Called by em_booking_output_placeholder filter, added in this object __construct() function.
-     * 
+     *
      * @param string $result
      * @param EM_Booking $EM_Booking
      * @param string $placeholder
      * @param string $target
      * @return string
      */
-    public function em_booking_output_placeholder( $result, $EM_Booking, $placeholder, $target='html' ) {    
+    public function em_booking_output_placeholder( $result, $EM_Booking, $placeholder, $target='html' ) {
         /* hook to add extra placeholders if needed */
-        do_action('em_securesubmit_booking_output_placeholder', $result, $EM_Booking, $placeholder, $target); 
+        do_action('em_securesubmit_booking_output_placeholder', $result, $EM_Booking, $placeholder, $target);
 
         return parent::em_booking_output_placeholder($result, $EM_Booking, $placeholder, $target);
     }
-    
+
     /**
      * Load the plugin text domain for translation.
      *
@@ -476,7 +476,7 @@ class EM_Gateway_SecureSubmit extends EM_Gateway {
      * SecureSubmit Functions - functions specific to securesubmit payments
      * --------------------------------------------------
      */
-    
+
     /**
      * Retreive the securesubmit vars needed to send to the gateway to proceed with payment
      * @param EM_Booking $EM_Booking
@@ -484,19 +484,19 @@ class EM_Gateway_SecureSubmit extends EM_Gateway {
     function authorize_and_capture($EM_Booking){
         global $EM_Notices;
 
-        if( !class_exists('HpsConfiguration') ){
+        if( !class_exists('HpsServicesConfig') ){
             require_once('hps/Hps.php');
         }
 
         $amount = $EM_Booking->get_price(false, false, true);
 
-        $config = new HpsConfiguration();
+        $config = new HpsServicesConfig();
 
         $config->secretApiKey = get_option('em_'.$this->gateway.'_secret_key');
         $config->versionNumber = '1740';
         $config->developerId = '002914';
 
-        $chargeService = new HpsChargeService($config);
+        $creditService = new HpsCreditService($config);
 
         $hpsaddress = new HpsAddress();
         if( EM_Gateways::get_customer_field('address', $EM_Booking) != '' ) $hpsaddress->address = EM_Gateways::get_customer_field('address', $EM_Booking);
@@ -507,7 +507,7 @@ class EM_Gateway_SecureSubmit extends EM_Gateway {
             $countries = em_get_countries();
             $hpsaddress->country = $countries[EM_Gateways::get_customer_field('country', $EM_Booking)];
         }
-        
+
         $names = explode(' ', $EM_Booking->get_person()->get_name());
 
         $cardHolder = new HpsCardHolder();
@@ -523,9 +523,9 @@ class EM_Gateway_SecureSubmit extends EM_Gateway {
         $details = new HpsTransactionDetails();
         $details->invoiceNumber = $EM_Booking->booking_id;
         $details->memo = preg_replace('/[^a-zA-Z0-9\s]/i', "", $EM_Booking->get_event()->event_name);
-        
+
         try {
-            $response = $chargeService->charge($amount, 'usd', $hpstoken, $cardHolder, false, null);
+            $response = $creditService->charge($amount, 'usd', $hpstoken, $cardHolder, false, null);
 
             $EM_Booking->booking_meta[$this->gateway] = array('txn_id'=>$response->transactionId, 'amount' => $amount);
             $this->record_transaction($EM_Booking, $amount, 'USD', date('Y-m-d H:i:s', current_time('timestamp')), $response->transactionId, 'Completed', '');
@@ -556,7 +556,7 @@ class EM_Gateway_SecureSubmit extends EM_Gateway {
 
             $result = $wpdb->query($sql);
             if ($result !== false) {
-                //delete the tickets 
+                //delete the tickets
                 $EM_Booking->get_tickets_bookings()->delete();
                 $EM_Booking->previous_status = $EM_Booking->booking_status;
                 $EM_Booking->booking_status = false;
