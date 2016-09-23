@@ -43,7 +43,7 @@ function emp_securesubmit_prereq() {
 function emp_securesubmit_register() {
     //check that EM Pro is installed
     if( ! defined( 'EMP_VERSION' ) ) {
-        add_action( 'admin_notices', 'emp_securesubmit_requirements' );
+        add_action( 'admin_notices', 'emp_securesubmit_prereq' );
         return false; //don't load plugin further
     }
 
