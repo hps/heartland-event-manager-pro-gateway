@@ -37,5 +37,14 @@ Get your Certification (Dev) API keys by creating an account by [Clicking Here](
 
 == Changelog ==
 
+= 1.0.3 =
+* Updated class references
+
+= 1.0.2 =
+* Updated SDK which includes update to certification URLs for PCI DSS 3.1
+
+= 1.0.1 =
+* Adding screenshots
+
 = 1.0.0 =
 * Initial Release
