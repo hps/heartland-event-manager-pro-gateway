@@ -137,7 +137,7 @@ class EM_Gateway_SecureSubmit extends EM_Gateway {
 
             add_filter( 'em_wp_localize_script', array( $this, 'em_wp_localize_script' ), 10, 1 );
             add_filter( 'em_booking_form_action_url', array( $this, 'force_ssl' ), 10, 1 );
-            wp_enqueue_script('hps_em_securesubmit_library', plugins_url('jquery.securesubmit.js',__FILE__), array('jquery'));
+            wp_enqueue_script('securesubmit', plugins_url('jquery.securesubmit.js',__FILE__), array('jquery'));
         }
     }
 
