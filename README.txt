@@ -37,6 +37,9 @@ Get your Certification (Dev) API keys by creating an account by [Clicking Here](
 
 == Changelog ==
 
+= 1.0.4 =
+* Updated PHP SDK for sanitize card holder details
+
 = 1.0.3 =
 * Updated class references
 
