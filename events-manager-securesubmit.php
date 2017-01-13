@@ -13,7 +13,7 @@
  * Plugin Name: Events Manager Pro SecureSubmit Gateway
  * Plugin URI:  http://wordpress.org/plugins/events-manager-pro-securesubmit-gateway/
  * Description: A SecureSubmit Gateway add-on for the Event Manager Pro plugin
- * Version:     1.0.3
+ * Version:     1.0.4
  * Author:      Mark Hagan <mark.hagan@e-hps.com>
  * Author URI:  https://developer.heartlandpaymentsystems.com/
  * Text Domain: events-manager-securesubmit-locale

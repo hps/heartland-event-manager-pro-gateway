@@ -302,7 +302,7 @@ class EM_Gateway_SecureSubmit extends EM_Gateway {
           </select>
         </p>
         <p class="em-bookings-form-ccv">
-          <label><?php  _e('CCV','em-pro'); ?></label>
+          <label><?php  _e('CVV','em-pro'); ?></label>
           <input type="text" size="4" id="card_cvv" value="" class="input" />
         </p>
 
