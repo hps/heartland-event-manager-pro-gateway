@@ -1,7 +1,7 @@
 === Events Manager Pro SecureSubmit Gateway ===
 Contributors: markhagan
 Tags: events, event, event registration, event calendar, events calendar, event management, addon, extension, addition, registration, ticket, tickets, ticketing, tickets, theme, widget, locations, maps, booking, attendance, attendee, calendar, gigs, payment, payments
-Tested up to: 4.7
+Tested up to: Wordpress 4.7, PHP 5.6.28
 Stable tag: trunk
 License: Custom
 License URI: https://github.com/SecureSubmit/magento-extension/blob/master/LICENSE
