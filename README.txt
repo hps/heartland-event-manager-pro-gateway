@@ -15,7 +15,7 @@ This plugin provides a Heartland Payment Systems Gatway addon to the Events Mana
 Features of SecureSubmit:
 
 *   Only two configuration fields: public and secret API key
-*   Simple to isntall and configure
+*   Simple to install and configure
 *   Fully maintained and supported by Heartland Payment Systems
 *	Tokenized payments help reduce the merchant's PCI exposure
 
@@ -36,6 +36,18 @@ Get your Certification (Dev) API keys by creating an account by [Clicking Here](
 2. A view of the plugin in action.
 
 == Changelog ==
+
+= 1.0.4 =
+* Updated PHP SDK for sanitize card holder details
+
+= 1.0.3 =
+* Updated class references
+
+= 1.0.2 =
+* Updated SDK which includes update to certification URLs for PCI DSS 3.1
+
+= 1.0.1 =
+* Adding screenshots
 
 = 1.0.0 =
 * Initial Release
