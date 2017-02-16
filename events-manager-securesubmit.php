@@ -1,6 +1,6 @@
 <?php
 /**
- * SecureSubmit add-on for Events Manager Pro 
+ * SecureSubmit add-on for Events Manager Pro
  *
  * An addon for the Events Manager Pro plugin that provides a gateway for SecureSubmit
  *
@@ -13,7 +13,7 @@
  * Plugin Name: Events Manager Pro SecureSubmit Gateway
  * Plugin URI:  http://wordpress.org/plugins/events-manager-pro-securesubmit-gateway/
  * Description: A SecureSubmit Gateway add-on for the Event Manager Pro plugin
- * Version:     1.0.0
+ * Version:     1.0.4
  * Author:      Mark Hagan <mark.hagan@e-hps.com>
  * Author URI:  https://developer.heartlandpaymentsystems.com/
  * Text Domain: events-manager-securesubmit-locale
@@ -38,7 +38,7 @@ function emp_securesubmit_prereq() {
 }
 
 /**
- * initialise plugin once other plugins are loaded 
+ * initialise plugin once other plugins are loaded
  */
 function emp_securesubmit_register() {
     //check that EM Pro is installed
@@ -55,7 +55,7 @@ function emp_securesubmit_register() {
 add_action( 'plugins_loaded', 'emp_securesubmit_register', 1000);
 
 /**
- * Set meta links in the plugins page 
+ * Set meta links in the plugins page
  */
 function emp_securesubmit_metalinks( $actions, $file, $plugin_data ) {
     $new_actions = array();

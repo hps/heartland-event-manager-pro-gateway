@@ -14,6 +14,7 @@
  * @package EM_Gateway_SecureSubmit
  * @author  Mark Hagan <mark.hagan@e-hps.com>
  */
+
 class EM_Gateway_SecureSubmit extends EM_Gateway {
     /**
      * Gateway reference, which is used in various places for referencing gateway info. Use lowercase characters/numbers and underscores.
@@ -25,7 +26,7 @@ class EM_Gateway_SecureSubmit extends EM_Gateway {
     var $gateway = 'securesubmit';
 
     /**
-     * This will be what admins see as the gatweway name (e.g. Offline, PayPal, Authorize.net ...)
+     * This will be what admins see as the gateway name (e.g. Offline, PayPal, Authorize.net ...)
      *
      * @since    1.0.0
      *
@@ -302,7 +303,7 @@ class EM_Gateway_SecureSubmit extends EM_Gateway {
           </select>
         </p>
         <p class="em-bookings-form-ccv">
-          <label><?php  _e('CCV','em-pro'); ?></label>
+          <label><?php  _e('CVV','em-pro'); ?></label>
           <input type="text" size="4" id="card_cvv" value="" class="input" />
         </p>
 
@@ -502,7 +503,7 @@ class EM_Gateway_SecureSubmit extends EM_Gateway {
         if( EM_Gateways::get_customer_field('address', $EM_Booking) != '' ) $hpsaddress->address = EM_Gateways::get_customer_field('address', $EM_Booking);
         if( EM_Gateways::get_customer_field('city', $EM_Booking) != '' ) $hpsaddress->city = EM_Gateways::get_customer_field('city', $EM_Booking);
         if( EM_Gateways::get_customer_field('state', $EM_Booking) != '' ) $hpsaddress->state = EM_Gateways::get_customer_field('state', $EM_Booking);
-        if( EM_Gateways::get_customer_field('zip', $EM_Booking) != '' ) $hpsaddress->zip = preg_replace('/[^0-9]/', '', EM_Gateways::get_customer_field('zip', $EM_Booking));
+        if( EM_Gateways::get_customer_field('zip', $EM_Booking) != '' ) $hpsaddress->zip = EM_Gateways::get_customer_field('zip', $EM_Booking);
         if( EM_Gateways::get_customer_field('country', $EM_Booking) != '' ){
             $countries = em_get_countries();
             $hpsaddress->country = $countries[EM_Gateways::get_customer_field('country', $EM_Booking)];
@@ -513,7 +514,7 @@ class EM_Gateway_SecureSubmit extends EM_Gateway {
         $cardHolder = new HpsCardHolder();
         if( !empty($names[0]) ) $cardHolder->firstName = array_shift($names);
         if( implode(' ',$names) != '' ) $cardHolder->lastName = implode(' ',$names);
-        if( EM_Gateways::get_customer_field('phone', $EM_Booking) != '' ) $cardHolder->phone = preg_replace('/[^0-9]/', '', EM_Gateways::get_customer_field('phone', $EM_Booking));
+        if( EM_Gateways::get_customer_field('phone', $EM_Booking) != '' ) $cardHolder->phone = EM_Gateways::get_customer_field('phone', $EM_Booking);
         $cardHolder->email = $EM_Booking->get_person()->user_email;
         $cardHolder->address = $hpsaddress;
 
