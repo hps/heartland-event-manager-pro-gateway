@@ -321,23 +321,29 @@ class EM_Gateway_SecureSubmit extends EM_Gateway {
             jQuery(document).ready(function() {
                 setTimeout(function () {
                     jQuery('#em-booking-submit').on('click', function() {
-                        hps.tokenize({
-                            data: {
-                                public_key: '<?php echo get_option('em_'.$this->gateway.'_public_key'); ?>',
-                                number: jQuery('#card_num').val(),
-                                cvc: jQuery('#card_cvv').val(),
-                                exp_month: jQuery('#exp_month').val(),
-                                exp_year: jQuery('#exp_year').val()
-                            },
-                            success: function(response) {
-                                secureSubmitResponseHandler(response);
-                            },
-                            error: function(response) {
-                                secureSubmitResponseHandler(response);
-                            }
-                        });
+                        var selectedgateway = jQuery('.em-booking-gateway select[name=gateway]').find('option:selected').val();
+                        if (selectedgateway == 'securesubmit') {
+                            hps.tokenize({
+                                data: {
+                                    public_key: '<?php echo get_option('em_'.$this->gateway.'_public_key'); ?>',
+                                    number: jQuery('#card_num').val(),
+                                    cvc: jQuery('#card_cvv').val(),
+                                    exp_month: jQuery('#exp_month').val(),
+                                    exp_year: jQuery('#exp_year').val()
+                                },
+                                success: function(response) {
+                                    secureSubmitResponseHandler(response);
+                                },
+                                error: function(response) {
+                                    secureSubmitResponseHandler(response);
+                                }
+                            });
 
-                        return false;
+                            return false;
+                        } else {
+                            jQuery('#em-booking-submit').off('click');
+                            jQuery('#em-booking-submit').click();
+                        }
                     });
                 }, 300);
             });
