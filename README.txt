@@ -36,6 +36,8 @@ Get your Certification (Dev) API keys by creating an account by [Clicking Here](
 2. A view of the plugin in action.
 
 == Changelog ==
+= 1.0.5 =
+* Fix issue with Secure Submit active with other gateways
 
 = 1.0.4 =
 * Updated PHP SDK for sanitize card holder details
