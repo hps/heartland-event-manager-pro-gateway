@@ -132,17 +132,25 @@ class EM_Gateway_SecureSubmit extends EM_Gateway {
     public function __construct() {
         parent::__construct();
 
-        if ($this->is_active()) {
+        if ($this->is_active() && !is_admin()) {
             // Load plugin text domain
-            add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
+            add_action('init', array($this, 'load_plugin_textdomain'));
+            add_action('wp_enqueue_scripts', array($this, 'loadScripts'));
 
-            add_filter( 'em_wp_localize_script', array( $this, 'em_wp_localize_script' ), 10, 1 );
-            add_filter( 'em_booking_form_action_url', array( $this, 'force_ssl' ), 10, 1 );
-            wp_enqueue_script('hps_em_securesubmit_library', plugins_url('jquery.securesubmit.js',__FILE__), array('jquery'));
+            add_filter('em_wp_localize_script', array($this, 'em_wp_localize_script'), 10, 1);
+            add_filter('em_booking_form_action_url', array($this, 'force_ssl'), 10, 1);
         }
     }
 
-   /**
+    /**
+     * Loads scripts on page load
+     */
+    public function loadScripts()
+    {
+        wp_enqueue_script('hps_em_securesubmit_library', plugins_url('jquery.securesubmit.js', __FILE__), array('jquery'));
+    }
+
+    /**
      * This function intercepts the previous booking form url from the javascript localized array of EM variables and
      * forces it to be an HTTPS url.
      *
