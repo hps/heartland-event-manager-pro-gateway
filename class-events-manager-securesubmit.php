@@ -329,7 +329,13 @@ class EM_Gateway_SecureSubmit extends EM_Gateway {
             jQuery(document).ready(function() {
                 setTimeout(function () {
                     jQuery('#em-booking-submit').on('click', function() {
-                        var selectedgateway = jQuery('.em-booking-gateway select[name=gateway]').find('option:selected').val();
+                        var selectedgateway = jQuery('.em-booking-gateway select[name="gateway"]').find('option:selected').val();
+
+                        // enable the selected gateway to be known when only one gateway is enabled
+                        if (!selectedgateway) {
+                            selectedgateway = jQuery('.em-booking-form [name="gateway"]').val();
+                        }
+
                         if (selectedgateway == 'securesubmit') {
                             hps.tokenize({
                                 data: {
