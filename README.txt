@@ -3,8 +3,8 @@ Contributors: markhagan
 Tags: events, event, event registration, event calendar, events calendar, event management, addon, extension, addition, registration, ticket, tickets, ticketing, tickets, theme, widget, locations, maps, booking, attendance, attendee, calendar, gigs, payment, payments
 Tested up to: 4.7
 Stable tag: trunk
-License: Custom
-License URI: https://github.com/SecureSubmit/magento-extension/blob/master/LICENSE
+License: GPLv2
+License URI: https://github.com/hps/heartland-event-manager-pro-gateway/blob/master/LICENSE.md
 
 SecureSubmit allows merchants to take PCI-Friendly Credit Card payments on Events Manager Pro using Heartland Payment Systems payment gateway.
 
@@ -36,6 +36,12 @@ Get your Certification (Dev) API keys by creating an account by [Clicking Here](
 2. A view of the plugin in action.
 
 == Changelog ==
+
+= 1.0.6 =
+* Fix issue with recent versions of Events Manager Pro's gateway HTML when only one gateway is configured
+
+= 1.0.5 =
+* Fix issue with Secure Submit active with other gateways
 
 = 1.0.4 =
 * Updated PHP SDK for sanitize card holder details

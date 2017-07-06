@@ -5,7 +5,7 @@
  * An addon for the Events Manager Pro plugin that provides a gateway for SecureSubmit
  *
  * @package   Events_Manager_SecureSubmit
- * @author    Mark Hagan (mark.hagan@e-hps.com)
+ * @author    Heartland Payment Systems <EntApp_DevPortal@e-hps.com>
  * @license   Custom (https://github.com/SecureSubmit/WordPress/blob/master/LICENSE.md)
  * @link      http://wordpress.org/plugins/events-manager-pro-securesubmit-gateway/
  *
@@ -13,12 +13,12 @@
  * Plugin Name: Events Manager Pro SecureSubmit Gateway
  * Plugin URI:  http://wordpress.org/plugins/events-manager-pro-securesubmit-gateway/
  * Description: A SecureSubmit Gateway add-on for the Event Manager Pro plugin
- * Version:     1.0.4
- * Author:      Mark Hagan <mark.hagan@e-hps.com>
+ * Version:     1.0.6
+ * Author:      Heartland Payment Systems
  * Author URI:  https://developer.heartlandpaymentsystems.com/
  * Text Domain: events-manager-securesubmit-locale
- * License:     Custom
- * License URI: https://github.com/SecureSubmit/WordPress/blob/master/LICENSE.md
+ * License:     GPLv2
+ * License URI: https://github.com/hps/heartland-event-manager-pro-gateway/blob/master/LICENSE.md
  * Domain Path: /lang
  */
 
