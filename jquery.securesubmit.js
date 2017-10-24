@@ -112,14 +112,14 @@ var hps = (function ($) {
             });
         },
 
-        trim: function (string) {   
-            
+        trim: function (string) {
+
             if (string !== undefined && typeof string === "string" ) {
-                
-                string = string.toString().replace(/^\s\s*/, '').replace(/\s\s*$/, ''); 
+
+                string = string.toString().replace(/^\s\s*/, '').replace(/\s\s*$/, '');
             }
-            
-            return string;                      
+
+            return string;
         },
 
         empty: function (val) {

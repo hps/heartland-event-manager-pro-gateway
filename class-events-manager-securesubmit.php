@@ -329,6 +329,25 @@ class EM_Gateway_SecureSubmit extends EM_Gateway {
             jQuery(document).ready(function() {
                 setTimeout(function () {
                     jQuery('#em-booking-submit').on('click', function() {
+
+                        var bookingTotal = 0;
+                        var bookedFreeTickets = false;
+                        var skipSecureSubmit = false;
+                        jQuery('.em-ticket').each(function() {
+                            var ticketPrice = Number(
+                                jQuery(this).find('.em-bookings-ticket-table-price').text().replace(/[^0-9\.-]+/g,'')
+                            );
+                            var ticketSpaces = Number(
+                                jQuery(this).find('select[name^="em_tickets"] option:selected').text()
+                            );
+                            if (ticketPrice == 0 && ticketSpaces > 0) {
+                                bookedFreeTickets = true;
+                            }
+                            bookingTotal += (ticketPrice * ticketSpaces);
+                        });
+                        if (bookedFreeTickets && bookingTotal == 0) {
+                            skipSecureSubmit = true;
+                        }
                         var selectedgateway = jQuery('.em-booking-gateway select[name="gateway"]').find('option:selected').val();
 
                         // enable the selected gateway to be known when only one gateway is enabled
@@ -336,7 +355,7 @@ class EM_Gateway_SecureSubmit extends EM_Gateway {
                             selectedgateway = jQuery('.em-booking-form [name="gateway"]').val();
                         }
 
-                        if (selectedgateway == 'securesubmit') {
+                        if (selectedgateway == 'securesubmit' && !skipSecureSubmit) {
                             hps.tokenize({
                                 data: {
                                     public_key: '<?php echo get_option('em_'.$this->gateway.'_public_key'); ?>',
