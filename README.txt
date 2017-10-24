@@ -37,6 +37,9 @@ Get your Certification (Dev) API keys by creating an account by [Clicking Here](
 
 == Changelog ==
 
+= 1.0.7 =
+* Fix issue with requiring payment information when there are only free tickets in the cart.
+
 = 1.0.6 =
 * Fix issue with recent versions of Events Manager Pro's gateway HTML when only one gateway is configured
 
