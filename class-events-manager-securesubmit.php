@@ -258,7 +258,7 @@ class EM_Gateway_SecureSubmit extends EM_Gateway {
      * @param EM_Booking $EM_Booking
      * @return array
      */
-    public function booking_form_feedback( $return, $EM_Booking ){
+    public function booking_form_feedback( $return, $EM_Booking = false ){
         // Double check $EM_Booking is an EM_Booking object and that we have a booking awaiting payment.
         if (!empty($return['result'])) {
             if (!empty($EM_Booking->booking_meta['gateway']) && $EM_Booking->booking_meta['gateway'] == $this->gateway && $EM_Booking->get_price() > 0) {
