@@ -255,19 +255,19 @@ class EM_Gateway_SecureSubmit extends EM_Gateway {
      * @since    1.0.0
      *
      * @param array $return
-     * @param EM_Booking $EM_Booking
+     * @param EM_Booking|false $EM_Booking
      * @return array
      */
-    public function booking_form_feedback( $return, $EM_Booking ){
+    public function booking_form_feedback( $return, $EM_Booking = false ){
         // Double check $EM_Booking is an EM_Booking object and that we have a booking awaiting payment.
         if (!empty($return['result'])) {
-            if (!empty($EM_Booking->booking_meta['gateway']) && $EM_Booking->booking_meta['gateway'] == $this->gateway && $EM_Booking->get_price() > 0) {
+            if ($EM_Booking && !empty($EM_Booking->booking_meta['gateway']) && $EM_Booking->booking_meta['gateway'] == $this->gateway && $EM_Booking->get_price() > 0) {
                 $return['message'] = get_option('em_securesubmit_booking_feedback');
             } else {
                 //returning a free message
                 $return['message'] = get_option('em_securesubmit_booking_feedback_free');
             }
-        } elseif (!empty($EM_Booking->booking_meta['gateway']) && $EM_Booking->booking_meta['gateway'] == $this->gateway && $EM_Booking->get_price() > 0) {
+        } elseif ($EM_Booking && !empty($EM_Booking->booking_meta['gateway']) && $EM_Booking->booking_meta['gateway'] == $this->gateway && $EM_Booking->get_price() > 0) {
             //void this last authroization
             $this->__void($EM_Booking);
         }
