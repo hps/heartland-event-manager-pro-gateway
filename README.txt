@@ -1,7 +1,7 @@
 === Events Manager Pro SecureSubmit Gateway ===
 Contributors: markhagan
 Tags: events, event, event registration, event calendar, events calendar, event management, addon, extension, addition, registration, ticket, tickets, ticketing, tickets, theme, widget, locations, maps, booking, attendance, attendee, calendar, gigs, payment, payments
-Tested up to: 4.9
+Tested up to: 5.2
 Stable tag: trunk
 License: GPLv2
 License URI: https://github.com/hps/heartland-event-manager-pro-gateway/blob/master/LICENSE.md
