@@ -14,6 +14,15 @@
  * @package EM_Gateway_SecureSubmit
  * @author  Mark Hagan <mark.hagan@e-hps.com>
  */
+use GlobalPayments\Api\Entities\EncryptionData;
+use GlobalPayments\Api\PaymentMethods\CreditCardData;
+use GlobalPayments\Api\PaymentMethods\CreditTrackData;
+use GlobalPayments\Api\Services\CreditService;
+use GlobalPayments\Api\ServicesConfig;
+use GlobalPayments\Api\ServicesContainer;
+use GlobalPayments\Api\Entities\Address;
+use GlobalPayments\Api\Entities\Customer;
+use GlobalPayments\Api\Entities\Reporting\TransactionSummary;
 
 class EM_Gateway_SecureSubmit extends EM_Gateway {
     /**
@@ -525,48 +534,40 @@ class EM_Gateway_SecureSubmit extends EM_Gateway {
         global $EM_Notices;
 
         if( !class_exists('HpsServicesConfig') ){
-            require_once('hps/Hps.php');
+            require_once('hps/vendor/autoload.php');
         }
 
         $amount = $EM_Booking->get_price(false, false, true);
 
-        $config = new HpsServicesConfig();
+        $creditService = $this->setConfig();
 
-        $config->secretApiKey = get_option('em_'.$this->gateway.'_secret_key');
-        $config->versionNumber = '1740';
-        $config->developerId = '002914';
-
-        $creditService = new HpsCreditService($config);
-
-        $hpsaddress = new HpsAddress();
-        if( EM_Gateways::get_customer_field('address', $EM_Booking) != '' ) $hpsaddress->address = EM_Gateways::get_customer_field('address', $EM_Booking);
+        $hpsaddress = new Address();
+        if( EM_Gateways::get_customer_field('address', $EM_Booking) != '' ) $hpsaddress->streetAddress1 = EM_Gateways::get_customer_field('address', $EM_Booking);
         if( EM_Gateways::get_customer_field('city', $EM_Booking) != '' ) $hpsaddress->city = EM_Gateways::get_customer_field('city', $EM_Booking);
         if( EM_Gateways::get_customer_field('state', $EM_Booking) != '' ) $hpsaddress->state = EM_Gateways::get_customer_field('state', $EM_Booking);
-        if( EM_Gateways::get_customer_field('zip', $EM_Booking) != '' ) $hpsaddress->zip = EM_Gateways::get_customer_field('zip', $EM_Booking);
+        if( EM_Gateways::get_customer_field('zip', $EM_Booking) != '' ) $hpsaddress->postalCode = EM_Gateways::get_customer_field('zip', $EM_Booking);
         if( EM_Gateways::get_customer_field('country', $EM_Booking) != '' ){
             $countries = em_get_countries();
             $hpsaddress->country = $countries[EM_Gateways::get_customer_field('country', $EM_Booking)];
         }
 
         $names = explode(' ', $EM_Booking->get_person()->get_name());
-
-        $cardHolder = new HpsCardHolder();
-        if( !empty($names[0]) ) $cardHolder->firstName = array_shift($names);
-        if( implode(' ',$names) != '' ) $cardHolder->lastName = implode(' ',$names);
-        if( EM_Gateways::get_customer_field('phone', $EM_Booking) != '' ) $cardHolder->phone = EM_Gateways::get_customer_field('phone', $EM_Booking);
-        $cardHolder->email = $EM_Booking->get_person()->user_email;
-        $cardHolder->address = $hpsaddress;
-
-        $hpstoken = new HpsTokenData();
-        $hpstoken->tokenValue = $_REQUEST['securesubmit_token'];
-
-        $details = new HpsTransactionDetails();
-        $details->invoiceNumber = $EM_Booking->booking_id;
-        $details->memo = preg_replace('/[^a-zA-Z0-9\s]/i', "", $EM_Booking->get_event()->event_name);
+        
+        $hpstoken = new CreditCardData();
+        $hpstoken->token = $_REQUEST['securesubmit_token'];
+        if( !empty($names[0]) ) $hpstoken->cardHolderName = array_shift($names);
+ 
+        $invoiceNumber = $EM_Booking->booking_id;
+        $status = preg_replace('/[^a-zA-Z0-9\s]/i', "", $EM_Booking->get_event()->event_name);
 
         try {
-            $response = $creditService->charge($amount, 'usd', $hpstoken, $cardHolder, false, null);
-
+            $response = $hpstoken->charge($amount)
+                ->withCurrency('USD')
+                ->withAddress($hpsaddress)
+                ->withAllowDuplicates(true)
+                ->withInvoiceNumber($invoiceNumber)
+                ->withDescription($status)
+                ->execute();
             $EM_Booking->booking_meta[$this->gateway] = array('txn_id'=>$response->transactionId, 'amount' => $amount);
             $this->record_transaction($EM_Booking, $amount, 'USD', date('Y-m-d H:i:s', current_time('timestamp')), $response->transactionId, 'Completed', '');
             $result = true;
@@ -578,7 +579,19 @@ class EM_Gateway_SecureSubmit extends EM_Gateway {
         //Return transaction_id or false
         return apply_filters('em_gateway_securesubmit_authorize', $result, $EM_Booking, $this);
     }
-
+    /**
+     * set secret key and load service configuration
+     * @return type*
+     */
+    public function setConfig()
+    {
+        $config = new ServicesConfig();
+        $config->secretApiKey = get_option('em_'.$this->gateway.'_secret_key');
+        $config->serviceUrl = "https://cert.api2.heartlandportico.com";
+        $service =  ServicesContainer::configure($config);
+        return $service;    
+    }
+    
     /**
      * Void a booking
      *
