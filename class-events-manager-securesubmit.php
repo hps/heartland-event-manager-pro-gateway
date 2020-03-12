@@ -23,6 +23,7 @@ use GlobalPayments\Api\ServicesContainer;
 use GlobalPayments\Api\Entities\Address;
 use GlobalPayments\Api\Entities\Customer;
 use GlobalPayments\Api\Entities\Reporting\TransactionSummary;
+use GlobalPayments\Api\Entities\Exceptions;
 
 class EM_Gateway_SecureSubmit extends EM_Gateway {
     /**
@@ -533,7 +534,7 @@ class EM_Gateway_SecureSubmit extends EM_Gateway {
     function authorize_and_capture($EM_Booking){
         global $EM_Notices;
 
-        if( !class_exists('HpsServicesConfig') ){
+        if( !class_exists('ServicesConfig') ){
             require_once('hps/vendor/autoload.php');
         }
 
@@ -554,7 +555,8 @@ class EM_Gateway_SecureSubmit extends EM_Gateway {
         $names = explode(' ', $EM_Booking->get_person()->get_name());
         
         $hpstoken = new CreditCardData();
-        $hpstoken->token = $_REQUEST['securesubmit_token'];
+        $hpstoken->token = filter_var(trim($_POST['securesubmit_token']), FILTER_SANITIZE_STRING);
+
         if( !empty($names[0]) ) $hpstoken->cardHolderName = array_shift($names);
  
         $invoiceNumber = $EM_Booking->booking_id;
@@ -571,7 +573,7 @@ class EM_Gateway_SecureSubmit extends EM_Gateway {
             $EM_Booking->booking_meta[$this->gateway] = array('txn_id'=>$response->transactionId, 'amount' => $amount);
             $this->record_transaction($EM_Booking, $amount, 'USD', date('Y-m-d H:i:s', current_time('timestamp')), $response->transactionId, 'Completed', '');
             $result = true;
-        } catch (HpsException $e) {
+        } catch (Exception $e) {
             $EM_Booking->add_error($e->getMessage());
             $result = false;
         }
@@ -587,9 +589,11 @@ class EM_Gateway_SecureSubmit extends EM_Gateway {
     {
         $config = new ServicesConfig();
         $config->secretApiKey = get_option('em_'.$this->gateway.'_secret_key');
-        $config->serviceUrl = "https://cert.api2.heartlandportico.com";
+        $env = $config->environment;
+        $config->serviceUrl = ($env != "TEST")?
+                'https://api2.heartlandportico.com': 
+                'https://cert.api2.heartlandportico.com'; 
         $service =  ServicesContainer::configure($config);
-        return $service;    
     }
     
     /**
