@@ -589,10 +589,7 @@ class EM_Gateway_SecureSubmit extends EM_Gateway {
     {
         $config = new ServicesConfig();
         $config->secretApiKey = get_option('em_'.$this->gateway.'_secret_key');
-        $env = $config->environment;
-        $config->serviceUrl = ($env != "TEST")?
-                'https://api2.heartlandportico.com': 
-                'https://cert.api2.heartlandportico.com'; 
+		$config->serviceUrl = strpos($config->secretApiKey, 'prod') ? 'https://api2.heartlandportico.com' : 'https://cert.api2.heartlandportico.com'; 
         $service =  ServicesContainer::configure($config);
     }
     

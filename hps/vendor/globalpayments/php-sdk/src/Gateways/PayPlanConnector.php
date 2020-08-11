@@ -158,12 +158,14 @@ class PayPlanConnector extends RestGateway implements IRecurringService
             }
         }
 
-        foreach ($request as $key => $value) {
-            if ($value !== 0 && empty($value)) {
-                unset($request[$key]);
+        if ($builder->transactionType !== TransactionType::EDIT) {
+            foreach ($request as $key => $value) {
+                if ($value !== 0 && empty($value)) {
+                    unset($request[$key]);
+                }
             }
         }
-        
+    
         $response = $this->doTransaction(
             $this->mapMethod($builder->transactionType),
             $this->mapUrl($builder),
@@ -266,7 +268,7 @@ class PayPlanConnector extends RestGateway implements IRecurringService
             if ($builder->transactionType === TransactionType::CREATE) {
                 $paymentMethod = $builder->entity->paymentMethod instanceof Credit ? 'CreditCard' : 'ACH';
             } elseif ($builder->transactionType === TransactionType::EDIT) {
-                $paymentMethod = str_replace($builder->entity->paymentType, ' ', '');
+                $paymentMethod = str_replace(' ', '', $builder->entity->paymentType);
             }
             return sprintf(
                 '%s%s%s',

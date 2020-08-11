@@ -1,17 +1,17 @@
 [
     {
         "name": "globalpayments/php-sdk",
-        "version": "2.0.0",
-        "version_normalized": "2.0.0.0",
+        "version": "2.0.3",
+        "version_normalized": "2.0.3.0",
         "source": {
             "type": "git",
             "url": "https://github.com/globalpayments/php-sdk.git",
-            "reference": "a73f8039b213ce6888df1f12e93fc3264d920f2e"
+            "reference": "94bfa579d6fd415c457bacf70389f73c3f9f17c3"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/globalpayments/php-sdk/zipball/a73f8039b213ce6888df1f12e93fc3264d920f2e",
-            "reference": "a73f8039b213ce6888df1f12e93fc3264d920f2e",
+            "url": "https://api.github.com/repos/globalpayments/php-sdk/zipball/94bfa579d6fd415c457bacf70389f73c3f9f17c3",
+            "reference": "94bfa579d6fd415c457bacf70389f73c3f9f17c3",
             "shasum": ""
         },
         "require": {
@@ -26,7 +26,7 @@
             "phpunit/phpunit": "~5.0",
             "squizlabs/php_codesniffer": "2.*"
         },
-        "time": "2019-12-10T15:53:35+00:00",
+        "time": "2020-07-09T12:56:12+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
