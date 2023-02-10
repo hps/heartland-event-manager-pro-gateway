@@ -1,7 +1,7 @@
 === Events Manager Pro SecureSubmit Gateway ===
-Contributors: markhagan
+Contributors: markhagan, tonysmedal
 Tags: events, event, event registration, event calendar, events calendar, event management, addon, extension, addition, registration, ticket, tickets, ticketing, tickets, theme, widget, locations, maps, booking, attendance, attendee, calendar, gigs, payment, payments
-Tested up to: 5.2
+Tested up to: 6.1.1
 Stable tag: trunk
 License: GPLv2
 License URI: https://github.com/hps/heartland-event-manager-pro-gateway/blob/master/LICENSE.md
@@ -36,6 +36,9 @@ Get your Certification (Dev) API keys by creating an account by [Clicking Here](
 2. A view of the plugin in action.
 
 == Changelog ==
+
+= 1.0.9 =
+* Fix faulty payment form logic that caused token-failure error messages
 
 = 1.0.8 =
 * Fix method signature for `booking_form_feedback` to match latest Events Manager versions
