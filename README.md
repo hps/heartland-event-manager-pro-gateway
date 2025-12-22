@@ -1,3 +1,6 @@
+# ** This repository is no longer maintained! **
+Our current OpenCart Plugin can be found <a href="https://github.com/globalpayments/opencart-hybrid" target="_blank">here</a>
+
 ## SecureSubmit Event Manager Pro Plugin
 
 This plugin allows for merchants using Event Manager Pro to take tokenized, PCI-friendly credit card payments for their events.
