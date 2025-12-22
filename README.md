@@ -1,5 +1,5 @@
 # ** This repository is no longer maintained! **
-Our current OpenCart Plugin can be found <a href="https://github.com/globalpayments/opencart-hybrid" target="_blank">here</a>
+Our current Global Payments Plugin can be found <a href="https://github.com/globalpayments" target="_blank">here</a>
 
 ## SecureSubmit Event Manager Pro Plugin
 
